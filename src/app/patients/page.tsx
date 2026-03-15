@@ -1,6 +1,8 @@
 import { prisma } from "@/lib/prisma";
 import PatientTableClient from "./patient-table-client";
 
+export const dynamic = "force-dynamic";
+
 export default async function PatientsPage() {
     // Fetch live patients from SQLite DB
     const dbPatients = await prisma.patient.findMany({

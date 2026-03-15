@@ -1,8 +1,10 @@
 "use server"
 
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
+
 export async function initiateActiveLearning() {
     try {
-        const response = await fetch("https://aasmaforall.vercel.app/active-learning/initiate", {
+        const response = await fetch(`${BACKEND_URL}/active-learning/initiate`, {
             method: "POST",
         });
         return await response.json();
@@ -41,7 +43,7 @@ export async function getHealthGptResponse(message: string) {
             return { response: data.choices[0].message.content };
         } else {
             // Fallback to local FastAPI if external fails
-            const localResponse = await fetch("https://aasmaforall.vercel.app/chat/health-gpt", {
+            const localResponse = await fetch(`${BACKEND_URL}/chat/health-gpt`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ message }),
@@ -57,7 +59,7 @@ export async function getHealthGptResponse(message: string) {
 
 export async function getFairnessReport() {
     try {
-        const response = await fetch("https://aasmaforall.vercel.app/fairness/report");
+        const response = await fetch(`${BACKEND_URL}/fairness/report`);
         return await response.json();
     } catch (e) {
         return null;
@@ -112,7 +114,7 @@ Be concise and clinical in your response.`;
 }
 export async function getBehavioralNudge(patientId: string, adherenceRate: number) {
     try {
-        const response = await fetch(`https://aasmaforall.vercel.app/agents/insights/${patientId}?adherence_rate=${adherenceRate}`);
+        const response = await fetch(`${BACKEND_URL}/agents/insights/${patientId}?adherence_rate=${adherenceRate}`);
         if (response.ok) return await response.json();
         throw new Error("Local Nudge Agent unreachable.");
     } catch (e) {
