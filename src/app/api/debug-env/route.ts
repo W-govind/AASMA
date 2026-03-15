@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
 
 export async function GET() {
     const dbUrl = process.env.DATABASE_URL || "NOT_SET";
@@ -20,7 +21,20 @@ export async function GET() {
         }
     };
 
+    let prismaTest = "NOT_STARTED";
+    try {
+        await prisma.$connect();
+        prismaTest = "SUCCESS";
+        const patientCount = await prisma.patient.count();
+        prismaTest = `SUCCESS (Count: ${patientCount})`;
+    } catch (e: any) {
+        prismaTest = `FAILED: ${e.message}`;
+    } finally {
+        await prisma.$disconnect();
+    }
+
     return NextResponse.json({
+        PRISMA_TEST: prismaTest,
         DATABASE_URL: mask(dbUrl),
         DIRECT_URL: mask(directUrl),
         NODE_ENV: process.env.NODE_ENV,
