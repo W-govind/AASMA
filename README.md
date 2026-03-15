@@ -1,61 +1,128 @@
-# AASMA - Advanced AI Healthcare Platform
+# AASMA: Advanced AI Systems for Medical Analytics 🏥✨
 
-AASMA is a full-stack multimodal AI healthcare platform integrating real-time wearable telemetry, environmental data, and personalized risk prediction.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Next.js](https://img.shields.io/badge/Next.js-15-black)](https://nextjs.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.110-009688)](https://fastapi.tiangolo.com/)
+[![Prisma](https://img.shields.io/badge/Prisma-5.22-2D3748)](https://www.prisma.io/)
+[![XGBoost](https://img.shields.io/badge/AI-XGBoost%20%7C%20SHAP-orange)](https://xgboost.readthedocs.io/)
 
-## 🏗️ Project Structure
-- **/aasma**: Next.js (TypeScript) Frontend + Prisma (SQLite).
-- **/aasma/backend**: Python ML Pipeline (XGBoost, SHAP, Hybrid Anomaly, Burnout Detection).
-
----
-
-## 🚀 Getting Started
-
-### 1. Prerequisites
-- **Node.js**: v18+ 
-- **Python**: v3.9+
-- **Prisma**: installed via npm
+**AASMA** is a state-of-the-art, full-stack multimodal AI healthcare platform designed for high-stakes clinical environments. It integrates real-time wearable telemetry, EHR history, and environmental hazards to provide clinicians with predictive, explainable, and actionable intelligence.
 
 ---
 
-### 2. Frontend Setup (Next.js)
-Navigate to the root directory `/aasma`:
+## 🌟 Key Pillars
 
-```bash
-# Install dependencies
-npm install
+### 1. Multimodal Intelligence Mesh
+- **Fusion Engine**: Combines static EHR data (60% weight) with dynamic wearable signals (40% weight) for high-precision risk scoring.
+- **SHAP Explainability**: Every prediction is accompanied by a feature attribution breakdown, ensuring clinicians understand the *why* behind the AI’s alert.
+- **Hybrid Anomaly Detection**: Blends population-level Isolation Forest outliers with personalized patient-specific Z-score baselines.
 
-# Setup SQLite database with Prisma
-npx prisma db push
+### 2. Clinical Operations & Well-being
+- **Burnout Detection**: Real-time staff monitoring based on shift duration, patient load, and sleep quality to prevent fatigue-related errors.
+- **Drug Repositioning**: Llama-3.1 powered analysis identifying repositioning candidates and clinical contraindications in polypharmacy profiles.
 
-# Run the development server
-npm run dev
+### 3. Behavioral Science & Active Learning
+- **Prospect Theory Nudging**: Leverages behavioral economics (Loss Aversion vs. Social Proof) to drive patient medication adherence based on real-time telemetry.
+- **Active Learning Loop**: A dedicated clinician feedback interface that allows experts to "Verify" or "Flag" AI insights, iteratively refining the model’s accuracy.
+
+---
+
+## 🏗️ System Architecture
+
+```mermaid
+graph TD
+    subgraph "Frontend (Next.js 15)"
+        UI[Interactive Dashboard]
+        ACT[Server Actions]
+        PRISMA[Prisma ORM]
+    end
+
+    subgraph "AI Agent Mesh (FastAPI)"
+        AG1[Multimodal Fusion]
+        AG2[XGBoost Risk Agent]
+        AG3[SHAP Explainer]
+        AG4[Behavioral Nudging]
+        AG5[Fairness Monitor]
+    end
+
+    subgraph "External Intelligence"
+        NIM[NVIDIA NIM: Llama-3.1-70b]
+        WTH[OpenWeather API]
+    end
+
+    UI <--> ACT
+    ACT <--> PRISMA
+    ACT <--> AG1
+    AG1 <--> AG2
+    AG2 <--> AG3
+    ACT <--> NIM
+    ACT <--> WTH
 ```
-Open [http://localhost:3000](http://localhost:3000) to view the dashboard.
 
 ---
-
-### 3. Backend Setup (Python ML)
-Navigate to `aasma/backend`:
-
-```bash
-# Install Python dependencies
-pip install -r requirements.txt
-
-# Run the full ML verification pipeline
-python run_pipeline.py
-```
-This script validates Data Ingestion, Fusion Engine, Risk Prediction, SHAP Explainability, Hybrid Anomaly Detection, and Burnout Detection.
-
----
-
-## 🔬 Core AI Features
-- **SHAP Explainability**: Visualizes feature attribution for risk scores.
-- **Hybrid Anomaly Detection**: Uses Isolation Forest & HR Z-Score.
-- **Counterfactual Simulation**: "What-if" scenario modeling.
-- **Multimodal Fusion**: Weights EHR risk (0.6) and Wearable risk (0.4).
-- **Burnout Detection**: Threshold-based clinician workload monitoring.
 
 ## 🛠️ Tech Stack
-- **Frontend**: Next.js, Tailwind CSS, Framer Motion, Shadcn/UI.
-- **Backend**: Python, XGBoost, SHAP, Scikit-Learn, Pandas.
-- **Database**: SQLite + Prisma ORM.
+
+- **Frontend**: [Next.js](https://nextjs.org/), [Tailwind CSS](https://tailwindcss.com/), [Framer Motion](https://www.framer.com/motion/), [Shadcn/UI](https://ui.shadcn.com/)
+- **Backend**: [Python](https://www.python.org/), [FastAPI](https://fastapi.tiangolo.com/), [Uvicorn](https://www.uvicorn.org/)
+- **Machine Learning**: [XGBoost](https://xgboost.readthedocs.io/), [SHAP](https://shap.readthedocs.io/), [Scikit-Learn](https://scikit-learn.org/), [Fairlearn](https://fairlearn.org/)
+- **Database**: [SQLite](https://www.sqlite.org/) via [Prisma](https://www.prisma.io/)
+- **LLM**: NVIDIA NIM (Llama-3.1-70b, Qwen-2.5)
+
+---
+
+## 🚀 Installation & Setup
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/W-govind/AASMA.git
+cd AASMA
+```
+
+### 2. Environment Configuration
+Create a `.env` file in the root directory:
+```env
+DATABASE_URL="file:./prisma/dev.db"
+NEXTAUTH_SECRET="your-secret-key"
+NEXTAUTH_URL="http://localhost:3000"
+NV_API_KEY="your-nvidia-nim-api-key"
+OPENWEATHER_API_KEY="your-openweathermap-key"
+```
+
+### 3. Frontend Setup
+```bash
+npm install
+npx prisma generate
+npx prisma db push
+npm run dev
+```
+
+### 4. Backend Setup
+```bash
+cd backend
+python -m venv venv
+# Windows
+.\venv\Scripts\activate
+pip install -r requirements.txt
+python api_server.py
+```
+
+---
+
+## 🔬 Scientific Foundations
+
+- **Prospect Theory**: Our Behavioral Nudging module applies the 2.5x psychological weight of loss framing to improve patient adherence.
+- **Fairness Monitoring**: Real-time evaluation across protected attributes (Age, Gender) using Demographic Parity and Equalized Opportunity metrics.
+- **Federated Learning**: Simulation of privacy-preserving model aggregation (FedAvg) across three secure hospital nodes.
+
+---
+
+## 📄 License
+Distributed under the MIT License. See `LICENSE` for more information.
+
+---
+
+## 📬 Contact
+**W-govind** - [GitHub Profile](https://github.com/W-govind)
+
+Project Link: [https://github.com/W-govind/AASMA](https://github.com/W-govind/AASMA)
