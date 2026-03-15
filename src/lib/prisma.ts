@@ -3,10 +3,6 @@ import { PrismaClient } from "@/generated/client";
 const globalForPrisma = global as unknown as { prisma: PrismaClient };
 
 export const prisma =
-    (globalForPrisma.prisma && (globalForPrisma.prisma as any).doctor)
-        ? globalForPrisma.prisma
-        : new PrismaClient({
-            log: ["query"],
-        });
+    globalForPrisma.prisma ?? new PrismaClient();
 
 if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
