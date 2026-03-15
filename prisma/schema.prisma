@@ -123,3 +123,4 @@ model ChatHistory {
   content     String
   timestamp   DateTime @default(now())
 }
+
