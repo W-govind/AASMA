@@ -12,19 +12,23 @@ import {
     Hospital,
     Mail,
     Trash2,
-    UserCheck,
     Search,
     Clock,
     Users,
     Moon,
-    Flame
+    Flame,
+    Loader2,
+    AlertCircle
 } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export default function StaffPage() {
     const [doctors, setDoctors] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
     const [updatingId, setUpdatingId] = useState<string | null>(null);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         loadDoctors();
@@ -38,23 +42,41 @@ export default function StaffPage() {
 
     async function handleAddDoctor(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        const formData = new FormData(e.currentTarget);
-        await addDoctor(formData);
-        e.currentTarget.reset();
-        loadDoctors();
+        setIsSubmitting(true);
+        setError(null);
+
+        try {
+            const formData = new FormData(e.currentTarget);
+            const result = await addDoctor(formData);
+
+            if (result.success) {
+                e.currentTarget.reset();
+                await loadDoctors();
+            } else {
+                setError(result.error || "Failed to add clinician.");
+            }
+        } catch (err: any) {
+            setError("A network error occurred. Please try again.");
+        } finally {
+            setIsSubmitting(false);
+        }
     }
 
     async function handleUpdateBurnout(id: string, shift: number, load: number, sleep: number) {
         setUpdatingId(id);
-        await updateDoctorBurnout(id, shift, load, sleep);
-        await loadDoctors();
+        const result = await updateDoctorBurnout(id, shift, load, sleep);
+        if (result.success) {
+            await loadDoctors();
+        }
         setUpdatingId(null);
     }
 
     async function handleDelete(id: string) {
         if (confirm("Are you sure you want to remove this clinician?")) {
-            await deleteDoctor(id);
-            loadDoctors();
+            const result = await deleteDoctor(id);
+            if (result.success) {
+                loadDoctors();
+            }
         }
     }
 
@@ -93,24 +115,38 @@ export default function StaffPage() {
                     </CardHeader>
                     <CardContent>
                         <form onSubmit={handleAddDoctor} className="space-y-4">
+                            {error && (
+                                <div className="p-3 bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs rounded-lg flex items-center gap-2 mb-4">
+                                    <AlertCircle className="w-4 h-4" />
+                                    {error}
+                                </div>
+                            )}
                             <div className="space-y-2">
                                 <label className="text-[10px] font-black uppercase text-slate-500 tracking-[2px]">Full Name</label>
-                                <Input name="name" placeholder="Dr. Elena Rodriguez" required className="bg-slate-950/50 border-slate-800 h-11" />
+                                <Input name="name" placeholder="Dr. Elena Rodriguez" required className="bg-slate-950/50 border-slate-800 h-11 text-white" />
                             </div>
                             <div className="space-y-2">
                                 <label className="text-[10px] font-black uppercase text-slate-500 tracking-[2px]">Specialty</label>
-                                <Input name="specialty" placeholder="Cardiology" required className="bg-slate-950/50 border-slate-800 h-11" />
+                                <Input name="specialty" placeholder="Cardiology" required className="bg-slate-950/50 border-slate-800 h-11 text-white" />
                             </div>
                             <div className="space-y-2">
                                 <label className="text-[10px] font-black uppercase text-slate-500 tracking-[2px]">Hospital/Unit</label>
-                                <Input name="hospital" placeholder="Central Metro Health" required className="bg-slate-950/50 border-slate-800 h-11" />
+                                <Input name="hospital" placeholder="Central Metro Health" required className="bg-slate-950/50 border-slate-800 h-11 text-white" />
                             </div>
                             <div className="space-y-2">
                                 <label className="text-[10px] font-black uppercase text-slate-500 tracking-[2px]">Email Address</label>
-                                <Input name="email" type="email" placeholder="elena.r@aasma.ai" required className="bg-slate-950/50 border-slate-800 h-11" />
+                                <Input name="email" type="email" placeholder="elena.r@aasma.ai" required className="bg-slate-950/50 border-slate-800 h-11 text-white" />
                             </div>
-                            <Button type="submit" className="w-full bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-black h-12 shadow-[0_10px_20px_rgba(16,185,129,0.2)]">
-                                Activate Staff Identity
+                            <Button
+                                type="submit"
+                                disabled={isSubmitting}
+                                className="w-full bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-black h-12 shadow-[0_10px_20px_rgba(16,185,129,0.2)] disabled:opacity-50"
+                            >
+                                {isSubmitting ? (
+                                    <Loader2 className="w-5 h-5 animate-spin" />
+                                ) : (
+                                    "Activate Staff Identity"
+                                )}
                             </Button>
                         </form>
                     </CardContent>
@@ -155,7 +191,7 @@ export default function StaffPage() {
                                         <Button
                                             variant="ghost"
                                             size="icon"
-                                            className="text-slate-600 hover:text-rose-500 hover:bg-rose-500/5 transition-colors absolute top-4 right-4"
+                                            className="text-slate-600 hover:text-rose-500 hover:bg-rose-500/5 transition-colors"
                                             onClick={() => handleDelete(doc.id)}
                                         >
                                             <Trash2 className="w-4 h-4" />
@@ -255,6 +291,3 @@ function MetricSlider({ label, value, max, unit, icon: Icon, onChange }: any) {
         </div>
     );
 }
-
-import { cn } from "@/lib/utils";
-import { Loader2 } from "lucide-react";

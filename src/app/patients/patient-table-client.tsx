@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -27,6 +28,7 @@ const mockShapData = [
 ];
 
 export default function PatientTableClient({ initialData }: { initialData: any[] }) {
+    const router = useRouter();
     const [searchTerm, setSearchTerm] = useState("");
     const [isAddModalOpen, setAddModalOpen] = useState(false);
     const [isEditModalOpen, setEditModalOpen] = useState(false);
@@ -48,20 +50,42 @@ export default function PatientTableClient({ initialData }: { initialData: any[]
         p.id.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
+    const handleDeleteClick = async (id: string, e: React.MouseEvent) => {
+        e.stopPropagation();
+        if (confirm("Are you sure you want to delete this patient record?")) {
+            const result = await deletePatient(id);
+            if (result.success) {
+                router.refresh();
+            } else {
+                alert("Error deleting patient: " + result.error);
+            }
+        }
+    };
+
     const handleAdd = async (e: React.FormEvent) => {
         e.preventDefault();
-        await createPatient(formData);
-        setAddModalOpen(false);
-        resetForm();
+        const result = await createPatient(formData);
+        if (result.success) {
+            setAddModalOpen(false);
+            resetForm();
+            router.refresh();
+        } else {
+            alert("Error creating patient: " + result.error);
+        }
     };
 
     const handleEdit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (selectedPatient) {
-            await updatePatient(selectedPatient.id, formData);
-            setEditModalOpen(false);
-            setSelectedPatient(null);
-            resetForm();
+            const result = await updatePatient(selectedPatient.id, formData);
+            if (result.success) {
+                setEditModalOpen(false);
+                setSelectedPatient(null);
+                resetForm();
+                router.refresh();
+            } else {
+                alert("Error updating patient: " + result.error);
+            }
         }
     };
 
