@@ -33,10 +33,15 @@ export async function GET() {
         await prisma.$disconnect();
     }
 
+    const allEnvVars = Object.keys(process.env).filter(key =>
+        key.includes("DATABASE") || key.includes("DIRECT") || key.includes("URL") || key.includes("POSTGRES") || key.includes("SUPABASE")
+    );
+
     return NextResponse.json({
         PRISMA_TEST: prismaTest,
         DATABASE_URL: mask(dbUrl),
         DIRECT_URL: mask(directUrl),
+        ENV_VARS_FOUND: allEnvVars,
         NODE_ENV: process.env.NODE_ENV,
     });
 }
