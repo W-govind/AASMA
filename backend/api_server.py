@@ -36,6 +36,10 @@ class ChatRequest(BaseModel):
     message: str
     patient_id: Optional[str] = "P-102"
 
+@app.get("/")
+async def root():
+    return {"message": "AASMA AI Agent Mesh is online", "health_check": "/health"}
+
 @app.get("/health")
 async def health_check():
     return {"status": "healthy", "agents_active": 20}
@@ -166,5 +170,5 @@ async def health_gpt(req: ChatRequest):
         return {"response": "AI Agent currently stabilizing... [Simulation Mode Active]"}
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8000))
+    port = int(os.environ.get("PORT", 10000))
     uvicorn.run(app, host="0.0.0.0", port=port)
