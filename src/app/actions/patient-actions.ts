@@ -23,11 +23,27 @@ export async function createPatient(data: any) {
                 aqi: parseFloat(data.aqi) || 45.0,
                 riskScore: parseFloat(data.riskScore) || 45.0,
                 status: data.status || "Stable",
-                adherenceRate: parseFloat(data.adherenceRate) || 0.85
+                adherenceRate: parseFloat(data.adherenceRate) || 0.85,
+                
+                // New Vitals
+                respiratoryRate: parseFloat(data.respiratoryRate) || 16.0,
+                glucoseLevel: parseFloat(data.glucoseLevel) || 100.0,
+                cholesterol: parseFloat(data.cholesterol) || 200.0,
+                bmi: parseFloat(data.bmi) || 22.0,
+
+                // Behavioral Data
+                dailyFiberIntake: parseFloat(data.dailyFiberIntake) || 25.0,
+                sleepHours: parseFloat(data.sleepHours) || 7.0,
+                stressLevel: parseFloat(data.stressLevel) || 3.0,
+                smokingStatus: data.smokingStatus || "None",
+                alcoholIntake: parseFloat(data.alcoholIntake) || 0.0,
+                exerciseMinutes: parseFloat(data.exerciseMinutes) || 30.0,
+                medicineAdherence: data.medicineAdherence === "true" || data.medicineAdherence === true
             },
         });
 
         revalidatePath("/patients");
+        revalidatePath("/");
         return { success: true, patient };
     } catch (error: any) {
         console.error("Error creating patient:", error);
@@ -56,11 +72,27 @@ export async function updatePatient(id: string, data: any) {
                 aqi: parseFloat(data.aqi),
                 riskScore: parseFloat(data.riskScore),
                 status: data.status,
-                adherenceRate: parseFloat(data.adherenceRate)
+                adherenceRate: parseFloat(data.adherenceRate),
+
+                // New Vitals
+                respiratoryRate: parseFloat(data.respiratoryRate),
+                glucoseLevel: parseFloat(data.glucoseLevel),
+                cholesterol: parseFloat(data.cholesterol),
+                bmi: parseFloat(data.bmi),
+
+                // Behavioral Data
+                dailyFiberIntake: parseFloat(data.dailyFiberIntake),
+                sleepHours: parseFloat(data.sleepHours),
+                stressLevel: parseFloat(data.stressLevel),
+                smokingStatus: data.smokingStatus,
+                alcoholIntake: parseFloat(data.alcoholIntake),
+                exerciseMinutes: parseFloat(data.exerciseMinutes),
+                medicineAdherence: data.medicineAdherence === "true" || data.medicineAdherence === true
             },
         });
 
         revalidatePath("/patients");
+        revalidatePath("/");
         return { success: true, patient };
     } catch (error: any) {
         console.error("Error updating patient:", error);
@@ -72,6 +104,7 @@ export async function deletePatient(id: string) {
     try {
         await prisma.patient.delete({ where: { id } });
         revalidatePath("/patients");
+        revalidatePath("/");
         return { success: true };
     } catch (error: any) {
         return { success: false, error: error.message };

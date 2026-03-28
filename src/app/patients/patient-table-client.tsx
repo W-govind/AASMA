@@ -42,7 +42,10 @@ export default function PatientTableClient({ initialData }: { initialData: any[]
     const [formData, setFormData] = useState({
         firstName: "", lastName: "", age: 45, gender: "Male", medicalHistory: "None",
         heartRate: 70, hrv: 50, systolicBp: 120, diastolicBp: 80, spo2: 98,
-        temperature: 36.5, activityLevel: 5.0, pm25: 15, aqi: 45, status: "Stable", riskScore: 30
+        temperature: 36.5, activityLevel: 5.0, pm25: 15, aqi: 45, status: "Stable", riskScore: 30,
+        respiratoryRate: 16, glucoseLevel: 100, cholesterol: 200, bmi: 22,
+        dailyFiberIntake: 25, sleepHours: 7, stressLevel: 3, smokingStatus: "None",
+        alcoholIntake: 0, exerciseMinutes: 30, adherenceRate: 0.85, medicineAdherence: true
     });
 
     const filteredPatients = initialData.filter(p =>
@@ -93,7 +96,10 @@ export default function PatientTableClient({ initialData }: { initialData: any[]
         setFormData({
             firstName: "", lastName: "", age: 45, gender: "Male", medicalHistory: "None",
             heartRate: 70, hrv: 50, systolicBp: 120, diastolicBp: 80, spo2: 98,
-            temperature: 36.5, activityLevel: 5.0, pm25: 15, aqi: 45, status: "Stable", riskScore: 30
+            temperature: 36.5, activityLevel: 5.0, pm25: 15, aqi: 45, status: "Stable", riskScore: 30,
+            respiratoryRate: 16, glucoseLevel: 100, cholesterol: 200, bmi: 22,
+            dailyFiberIntake: 25, sleepHours: 7, stressLevel: 3, smokingStatus: "None",
+            alcoholIntake: 0, exerciseMinutes: 30, adherenceRate: 0.85, medicineAdherence: true
         });
     };
 
@@ -170,6 +176,7 @@ export default function PatientTableClient({ initialData }: { initialData: any[]
                                 <TableHead className="text-slate-400 font-semibold py-4">Patient Info</TableHead>
                                 <TableHead className="text-slate-400 font-semibold">Demographics</TableHead>
                                 <TableHead className="text-slate-400 font-semibold">XGBoost Risk Score</TableHead>
+                                <TableHead className="text-slate-400 font-semibold">Medicine</TableHead>
                                 <TableHead className="text-slate-400 font-semibold">Status</TableHead>
                                 <TableHead className="text-slate-400 font-semibold">Last Sync</TableHead>
                                 <TableHead className="text-right text-slate-400 font-semibold pr-6">Actions</TableHead>
@@ -225,6 +232,14 @@ export default function PatientTableClient({ initialData }: { initialData: any[]
                                                     />
                                                 </div>
                                             </div>
+                                        </TableCell>
+                                        <TableCell>
+                                            <Badge className={cn(
+                                                "rounded-md px-2 py-0.5 text-[10px] transition-all border font-bold uppercase tracking-widest",
+                                                patient.medicineAdherence ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20" : "bg-rose-500/10 text-rose-400 border-rose-500/20"
+                                            )}>
+                                                {patient.medicineAdherence ? "ON TIME" : "DELAYED"}
+                                            </Badge>
                                         </TableCell>
                                         <TableCell>
                                             <Badge className={cn(
@@ -731,6 +746,101 @@ export default function PatientTableClient({ initialData }: { initialData: any[]
                                     <div className="space-y-2">
                                         <label className="text-[10px] font-black text-slate-500 uppercase tracking-[2px]">Primary Medical History</label>
                                         <Input className="bg-slate-950/50 border-slate-800 h-11" value={formData.medicalHistory} onChange={e => setFormData({ ...formData, medicalHistory: e.target.value })} />
+                                    </div>
+
+                                    <div className="border-t border-slate-800 pt-4 mt-6">
+                                        <h3 className="text-xs font-black text-emerald-500 uppercase tracking-[2px] mb-4">Clinical Vitals (Simulation Baseline)</h3>
+                                        <div className="grid grid-cols-2 gap-4">
+                                            <div className="space-y-1">
+                                                <label className="text-[9px] font-bold text-slate-400 uppercase">Heart Rate (bpm)</label>
+                                                <Input type="number" className="bg-slate-950/30 border-slate-800 h-9 text-xs" value={formData.heartRate} onChange={e => setFormData({ ...formData, heartRate: +e.target.value })} />
+                                            </div>
+                                            <div className="space-y-1">
+                                                <label className="text-[9px] font-bold text-slate-400 uppercase">SpO2 (%)</label>
+                                                <Input type="number" className="bg-slate-950/30 border-slate-800 h-9 text-xs" value={formData.spo2} onChange={e => setFormData({ ...formData, spo2: +e.target.value })} />
+                                            </div>
+                                            <div className="space-y-1">
+                                                <label className="text-[9px] font-bold text-slate-400 uppercase">Systolic BP</label>
+                                                <Input type="number" className="bg-slate-950/30 border-slate-800 h-9 text-xs" value={formData.systolicBp} onChange={e => setFormData({ ...formData, systolicBp: +e.target.value })} />
+                                            </div>
+                                            <div className="space-y-1">
+                                                <label className="text-[9px] font-bold text-slate-400 uppercase">Diastolic BP</label>
+                                                <Input type="number" className="bg-slate-950/30 border-slate-800 h-9 text-xs" value={formData.diastolicBp} onChange={e => setFormData({ ...formData, diastolicBp: +e.target.value })} />
+                                            </div>
+                                            <div className="space-y-1">
+                                                <label className="text-[9px] font-bold text-slate-400 uppercase">Glucose (mg/dL)</label>
+                                                <Input type="number" className="bg-slate-950/30 border-slate-800 h-9 text-xs" value={formData.glucoseLevel} onChange={e => setFormData({ ...formData, glucoseLevel: +e.target.value })} />
+                                            </div>
+                                            <div className="space-y-1">
+                                                <label className="text-[9px] font-bold text-slate-400 uppercase">Resp. Rate</label>
+                                                <Input type="number" className="bg-slate-950/30 border-slate-800 h-9 text-xs" value={formData.respiratoryRate} onChange={e => setFormData({ ...formData, respiratoryRate: +e.target.value })} />
+                                            </div>
+                                            <div className="space-y-1">
+                                                <label className="text-[9px] font-bold text-slate-400 uppercase">HRV (ms)</label>
+                                                <Input type="number" className="bg-slate-950/30 border-slate-800 h-9 text-xs" value={formData.hrv} onChange={e => setFormData({ ...formData, hrv: +e.target.value })} />
+                                            </div>
+                                            <div className="space-y-1">
+                                                <label className="text-[9px] font-bold text-slate-400 uppercase">Temp (°C)</label>
+                                                <Input type="number" step="0.1" className="bg-slate-950/30 border-slate-800 h-9 text-xs" value={formData.temperature} onChange={e => setFormData({ ...formData, temperature: +e.target.value })} />
+                                            </div>
+                                            <div className="space-y-1">
+                                                <label className="text-[9px] font-bold text-slate-400 uppercase">Cholesterol</label>
+                                                <Input type="number" className="bg-slate-950/30 border-slate-800 h-9 text-xs" value={formData.cholesterol} onChange={e => setFormData({ ...formData, cholesterol: +e.target.value })} />
+                                            </div>
+                                            <div className="space-y-1">
+                                                <label className="text-[9px] font-bold text-slate-400 uppercase">BMI</label>
+                                                <Input type="number" step="0.1" className="bg-slate-950/30 border-slate-800 h-9 text-xs" value={formData.bmi} onChange={e => setFormData({ ...formData, bmi: +e.target.value })} />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="border-t border-slate-800 pt-4">
+                                        <h3 className="text-xs font-black text-emerald-500 uppercase tracking-[2px] mb-4">Behavioral & Fiber Data</h3>
+                                        <div className="grid grid-cols-2 gap-4">
+                                            <div className="space-y-1">
+                                                <label className="text-[9px] font-bold text-slate-400 uppercase">Daily Fiber (g)</label>
+                                                <Input type="number" className="bg-slate-950/30 border-slate-800 h-9 text-xs" value={formData.dailyFiberIntake} onChange={e => setFormData({ ...formData, dailyFiberIntake: +e.target.value })} />
+                                            </div>
+                                            <div className="space-y-1">
+                                                <label className="text-[9px] font-bold text-slate-400 uppercase">Sleep Hours</label>
+                                                <Input type="number" step="0.5" className="bg-slate-950/30 border-slate-800 h-9 text-xs" value={formData.sleepHours} onChange={e => setFormData({ ...formData, sleepHours: +e.target.value })} />
+                                            </div>
+                                            <div className="space-y-1">
+                                                <label className="text-[9px] font-bold text-slate-400 uppercase">Stress (1-10)</label>
+                                                <Input type="number" className="bg-slate-950/30 border-slate-800 h-9 text-xs" value={formData.stressLevel} onChange={e => setFormData({ ...formData, stressLevel: +e.target.value })} />
+                                            </div>
+                                            <div className="space-y-1">
+                                                <label className="text-[9px] font-bold text-slate-400 uppercase">Exercise (min)</label>
+                                                <Input type="number" className="bg-slate-950/30 border-slate-800 h-9 text-xs" value={formData.exerciseMinutes} onChange={e => setFormData({ ...formData, exerciseMinutes: +e.target.value })} />
+                                            </div>
+                                            <div className="space-y-1">
+                                                <label className="text-[9px] font-bold text-slate-400 uppercase">Smoking</label>
+                                                <select
+                                                    className="w-full bg-slate-950/30 border border-slate-800 h-9 rounded-md px-2 text-[10px] outline-none text-slate-200"
+                                                    value={formData.smokingStatus}
+                                                    onChange={e => setFormData({ ...formData, smokingStatus: e.target.value })}
+                                                >
+                                                    <option value="None">None</option>
+                                                    <option value="Former">Former</option>
+                                                    <option value="Current">Current</option>
+                                                </select>
+                                            </div>
+                                            <div className="space-y-1">
+                                                <label className="text-[9px] font-bold text-slate-400 uppercase">Alcohol/wk</label>
+                                                <Input type="number" className="bg-slate-950/30 border-slate-800 h-9 text-xs" value={formData.alcoholIntake} onChange={e => setFormData({ ...formData, alcoholIntake: +e.target.value })} />
+                                            </div>
+                                            <div className="space-y-1">
+                                                <label className="text-[9px] font-bold text-slate-400 uppercase">Medicine on Time?</label>
+                                                <select
+                                                    className="w-full bg-slate-950/30 border border-slate-800 h-9 rounded-md px-2 text-[10px] outline-none text-slate-200"
+                                                    value={formData.medicineAdherence ? "true" : "false"}
+                                                    onChange={e => setFormData({ ...formData, medicineAdherence: e.target.value === "true" })}
+                                                >
+                                                    <option value="true">Yes</option>
+                                                    <option value="false">No</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div className="pt-6 flex gap-4">

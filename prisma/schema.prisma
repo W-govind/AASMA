@@ -47,6 +47,21 @@ model Patient {
   anomalyZScore   Float     @default(0.0)
   adherenceRate   Float     @default(0.85) // Behavioral Nudging Metric
 
+  // Additional Vitals
+  respiratoryRate Float     @default(16.0)
+  glucoseLevel    Float     @default(100.0)
+  cholesterol     Float     @default(200.0)
+  bmi             Float     @default(22.0)
+
+  // Behavioral Data
+  dailyFiberIntake Float    @default(25.0)
+  sleepHours       Float    @default(7.0)
+  stressLevel      Float    @default(3.0)
+  smokingStatus    String   @default("None")
+  alcoholIntake    Float    @default(0.0)
+  exerciseMinutes  Float    @default(30.0)
+  medicineAdherence Boolean? @default(true)
+
   // Scores
   riskScore       Float     @default(0)
   status          String    @default("Stable")
