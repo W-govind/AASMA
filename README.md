@@ -126,3 +126,5 @@ Distributed under the MIT License. See `LICENSE` for more information.
 **W-govind** - [GitHub Profile](https://github.com/W-govind)
 
 Project Link: [https://github.com/W-govind/AASMA](https://github.com/W-govind/AASMA)
+DOI: 10.21917/ijdsml.2026.0198
+ORCID: https://orcid.org/0009-0009-6154-0004
