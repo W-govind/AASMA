@@ -1,130 +1,385 @@
-# AASMA: Adaptive Agent-based Smart Multimodal Assistant 🏥✨
+# 🏥 AASMA: Adaptive Agent-Based Smart Multimodal Assistant
+
+<div align="center">
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Next.js](https://img.shields.io/badge/Next.js-15-black)](https://nextjs.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.110-009688)](https://fastapi.tiangolo.com/)
 [![Prisma](https://img.shields.io/badge/Prisma-5.22-2D3748)](https://www.prisma.io/)
 [![XGBoost](https://img.shields.io/badge/AI-XGBoost%20%7C%20SHAP-orange)](https://xgboost.readthedocs.io/)
+[![DOI](https://img.shields.io/badge/DOI-10.21917%2Fijdsml.2026.0198-blue)](https://doi.org/10.21917/ijdsml.2026.0198)
+[![Publication](https://img.shields.io/badge/Peer--Reviewed-Published-success)](https://doi.org/10.21917/ijdsml.2026.0198)
 
-**AASMA** is a state-of-the-art, full-stack multimodal AI healthcare platform designed for high-stakes clinical environments. It integrates real-time wearable telemetry, EHR history, and environmental hazards to provide clinicians with predictive, explainable, and actionable intelligence.
+**A Peer-Reviewed AI-powered Multimodal Clinical Decision Support System for Proactive Healthcare**
 
----
-
-## 🌟 Key Pillars
-
-### 1. Multimodal Intelligence Mesh
-- **Fusion Engine**: Combines static EHR data (60% weight) with dynamic wearable signals (40% weight) for high-precision risk scoring.
-- **SHAP Explainability**: Every prediction is accompanied by a feature attribution breakdown, ensuring clinicians understand the *why* behind the AI’s alert.
-- **Hybrid Anomaly Detection**: Blends population-level Isolation Forest outliers with personalized patient-specific Z-score baselines.
-
-### 2. Clinical Operations & Well-being
-- **Burnout Detection**: Real-time staff monitoring based on shift duration, patient load, and sleep quality to prevent fatigue-related errors.
-- **Drug Repositioning**: Llama-3.1 powered analysis identifying repositioning candidates and clinical contraindications in polypharmacy profiles.
-
-### 3. Behavioral Science & Active Learning
-- **Prospect Theory Nudging**: Leverages behavioral economics (Loss Aversion vs. Social Proof) to drive patient medication adherence based on real-time telemetry.
-- **Active Learning Loop**: A dedicated clinician feedback interface that allows experts to "Verify" or "Flag" AI insights, iteratively refining the model’s accuracy.
+</div>
 
 ---
 
-## 🏗️ System Architecture
+# Overview
+
+AASMA (**Adaptive Agent-Based Smart Multimodal Assistant**) is an intelligent healthcare platform that combines **Artificial Intelligence**, **Machine Learning**, **Explainable AI (XAI)**, **Agent-Based Systems**, and **Multimodal Data Fusion** to provide proactive patient monitoring and early clinical deterioration prediction.
+
+The system integrates Electronic Health Records (EHR), wearable sensor data, environmental information, and clinician feedback to generate explainable, context-aware clinical insights for real-time healthcare decision support.
+
+---
+
+# 📄 Peer-Reviewed Publication
+
+This project has been published in the **ICTACT Journal on Data Science and Machine Learning**.
+
+### **Publication**
+
+**AASMA: An Adaptive Agent-Based Smart Multimodal Assistant for Proactive Healthcare**
+
+**Lead Author:** Govind Sharma
+
+**Authors**
+
+- Govind Sharma
+- Shaurya Pal Singh
+- Disha Basu
+- B.V.A.N.S.S. Prabhakar Rao
+
+**Journal**
+
+ICTACT Journal on Data Science and Machine Learning
+
+**Volume:** 7
+
+**Issue:** 3
+
+**Year:** 2026
+
+**Pages:** 1077–1082
+
+**DOI**
+
+https://doi.org/10.21917/ijdsml.2026.0198
+
+### Citation
+
+```text
+Sharma, G., Singh, S. P., Basu, D., & Rao, B. V. A. N. S. S.
+(2026). AASMA: An Adaptive Agent-Based Smart Multimodal Assistant
+for Proactive Healthcare.
+ICTACT Journal on Data Science and Machine Learning,
+7(3), 1077–1082.
+https://doi.org/10.21917/ijdsml.2026.0198
+```
+
+If you use this project in your research, please cite the publication.
+
+---
+
+# Research Highlights
+
+- Peer-reviewed Journal Publication
+- Lead-authored AI Healthcare Research
+- Multimodal AI Framework
+- Explainable AI using SHAP
+- Intelligent Agent-Based Architecture
+- Clinical Decision Support
+- Predictive Analytics
+- Healthcare Risk Prediction
+- Context-Aware Alert Prioritization
+- Human-in-the-loop Learning
+
+---
+
+# Key Features
+
+## Multimodal Intelligence
+
+- Integration of Electronic Health Records
+- Wearable Sensor Analytics
+- Environmental Risk Assessment
+- Dynamic Risk Prediction
+
+---
+
+## Explainable AI
+
+- SHAP Explainability
+- Feature Attribution
+- Transparent Clinical Predictions
+- Trustworthy AI
+
+---
+
+## Clinical Decision Support
+
+- Early Deterioration Detection
+- Personalized Patient Monitoring
+- Intelligent Alert Prioritization
+- Risk Stratification
+
+---
+
+## Behavioral Intelligence
+
+- Prospect Theory-based Patient Nudging
+- Medication Adherence Prediction
+- Clinician Feedback Loop
+- Active Learning
+
+---
+
+## Responsible AI
+
+- Fairness Monitoring
+- Bias Detection
+- Demographic Parity
+- Equal Opportunity Evaluation
+
+---
+
+# System Architecture
 
 ```mermaid
 graph TD
-    subgraph "Frontend (Next.js 15)"
-        UI[Interactive Dashboard]
-        ACT[Server Actions]
-        PRISMA[Prisma ORM]
-    end
 
-    subgraph "AI Agent Mesh (FastAPI)"
-        AG1[Multimodal Fusion]
-        AG2[XGBoost Risk Agent]
-        AG3[SHAP Explainer]
-        AG4[Behavioral Nudging]
-        AG5[Fairness Monitor]
-    end
+subgraph Frontend
 
-    subgraph "External Intelligence"
-        NIM[NVIDIA NIM: Llama-3.1-70b]
-        WTH[OpenWeather API]
-    end
+A[Next.js Dashboard]
 
-    UI <--> ACT
-    ACT <--> PRISMA
-    ACT <--> AG1
-    AG1 <--> AG2
-    AG2 <--> AG3
-    ACT <--> NIM
-    ACT <--> WTH
+B[Prisma ORM]
+
+C[Authentication]
+
+end
+
+subgraph Backend
+
+D[FastAPI]
+
+E[Agent Manager]
+
+F[Risk Prediction]
+
+G[SHAP Explainability]
+
+H[Behavioral Intelligence]
+
+I[Fairness Engine]
+
+end
+
+subgraph External APIs
+
+J[NVIDIA NIM]
+
+K[OpenWeather]
+
+end
+
+subgraph Database
+
+L[SQLite]
+
+end
+
+A --> D
+
+D --> E
+
+E --> F
+
+F --> G
+
+D --> H
+
+D --> I
+
+D --> J
+
+D --> K
+
+D --> L
 ```
 
 ---
 
-## 🛠️ Tech Stack
+# Technology Stack
 
-- **Frontend**: [Next.js](https://nextjs.org/), [Tailwind CSS](https://tailwindcss.com/), [Framer Motion](https://www.framer.com/motion/), [Shadcn/UI](https://ui.shadcn.com/)
-- **Backend**: [Python](https://www.python.org/), [FastAPI](https://fastapi.tiangolo.com/), [Uvicorn](https://www.uvicorn.org/)
-- **Machine Learning**: [XGBoost](https://xgboost.readthedocs.io/), [SHAP](https://shap.readthedocs.io/), [Scikit-Learn](https://scikit-learn.org/), [Fairlearn](https://fairlearn.org/)
-- **Database**: [SQLite](https://www.sqlite.org/) via [Prisma](https://www.prisma.io/)
-- **LLM**: NVIDIA NIM (Llama-3.1-70b, Qwen-2.5)
+## Frontend
+
+- Next.js 15
+- React
+- Tailwind CSS
+- ShadCN UI
+- Framer Motion
+
+## Backend
+
+- Python
+- FastAPI
+- Uvicorn
+
+## Artificial Intelligence
+
+- XGBoost
+- SHAP
+- Scikit-learn
+- Fairlearn
+- Isolation Forest
+
+## Database
+
+- SQLite
+- Prisma ORM
+
+## Large Language Models
+
+- NVIDIA NIM
+- Llama 3.1
+- Qwen 2.5
 
 ---
 
-## 🚀 Installation & Setup
+# Installation
 
-### 1. Clone the Repository
+## Clone Repository
+
 ```bash
 git clone https://github.com/W-govind/AASMA.git
+
 cd AASMA
 ```
 
-### 2. Environment Configuration
-Create a `.env` file in the root directory:
-```env
-DATABASE_URL="file:./prisma/dev.db"
-NEXTAUTH_SECRET="your-secret-key"
-NEXTAUTH_URL="http://localhost:3000"
-NV_API_KEY="your-nvidia-nim-api-key"
-OPENWEATHER_API_KEY="your-openweathermap-key"
+---
+
+## Environment Variables
+
+Create
+
+```
+.env
 ```
 
-### 3. Frontend Setup
+```env
+DATABASE_URL="file:./prisma/dev.db"
+
+NEXTAUTH_SECRET="your-secret"
+
+NEXTAUTH_URL="http://localhost:3000"
+
+NV_API_KEY="your-key"
+
+OPENWEATHER_API_KEY="your-key"
+```
+
+---
+
+## Frontend
+
 ```bash
 npm install
+
 npx prisma generate
+
 npx prisma db push
+
 npm run dev
 ```
 
-### 4. Backend Setup
+---
+
+## Backend
+
 ```bash
 cd backend
+
 python -m venv venv
+
 # Windows
+
 .\venv\Scripts\activate
+
 pip install -r requirements.txt
+
 python api_server.py
 ```
 
 ---
 
-## 🔬 Scientific Foundations
+# Scientific Foundations
 
-- **Prospect Theory**: Our Behavioral Nudging module applies the 2.5x psychological weight of loss framing to improve patient adherence.
-- **Fairness Monitoring**: Real-time evaluation across protected attributes (Age, Gender) using Demographic Parity and Equalized Opportunity metrics.
-- **Federated Learning**: Simulation of privacy-preserving model aggregation (FedAvg) across three secure hospital nodes.
+- Explainable AI (SHAP)
+- Multimodal Learning
+- Predictive Analytics
+- Prospect Theory
+- Active Learning
+- Agent-Based Systems
+- Federated Learning
+- Fair AI
+- Clinical Decision Support Systems
+- Healthcare Informatics
 
 ---
 
-## 📄 License
-Distributed under the MIT License. See `LICENSE` for more information.
+# Future Work
+
+- Real Hospital Deployment
+- Federated Clinical Training
+- ICU Integration
+- Edge AI
+- Medical Image Analysis
+- LLM-powered Clinical Reasoning
+- Reinforcement Learning for Treatment Recommendation
 
 ---
 
-## 📬 Contact
-**W-govind** - [GitHub Profile](https://github.com/W-govind)
+# License
 
-Project Link: [https://github.com/W-govind/AASMA](https://github.com/W-govind/AASMA)
-DOI: [10.21917/ijdsml.2026.0198](https://doi.org/10.21917/ijdsml.2026.0198)
-ORCID: https://orcid.org/0009-0009-6154-0004
+Distributed under the MIT License.
+
+See **LICENSE** for details.
+
+---
+
+# Contact
+
+## Lead Author
+
+**Govind Sharma**
+
+Computer Science & Engineering
+
+Vellore Institute of Technology, Chennai
+
+---
+
+### GitHub
+
+https://github.com/W-govind
+
+### Project Repository
+
+https://github.com/W-govind/AASMA
+
+### DOI
+
+https://doi.org/10.21917/ijdsml.2026.0198
+
+### ORCID
+
+https://orcid.org/0009-0009-6154-0004
+
+### LinkedIn
+
+https://www.linkedin.com/in/YOUR-LINKEDIN-USERNAME
+
+---
+
+## ⭐ Support
+
+If you found this project useful:
+
+⭐ Star the repository
+
+🍴 Fork the repository
+
+📄 Cite the publication
+
+🤝 Contribute to future development
