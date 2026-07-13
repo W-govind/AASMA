@@ -366,9 +366,6 @@ https://doi.org/10.21917/ijdsml.2026.0198
 
 https://orcid.org/0009-0009-6154-0004
 
-### LinkedIn
-
-https://www.linkedin.com/in/YOUR-LINKEDIN-USERNAME
 
 ---
 
